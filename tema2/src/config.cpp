@@ -16,7 +16,7 @@ int Config::notaMaxima() const
 
 Config& config()
 {
-    static Config instanta;   // se construieste o singura data, la primul apel
+    static Config instanta;   // constructed once, on first call
     return instanta;
 }
 

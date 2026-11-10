@@ -6,9 +6,7 @@
 
 namespace tema2 {
 
-// ---------- GRESIT: atribuire in corpul constructorului ----------
-// Membrii sunt mai intai construiti implicit, apoi li se atribuie valori.
-// => 2 apeluri (constructor implicit + operator=) in loc de 1.
+// BAD: assignment in constructor body (default ctor + operator=)
 class StudentAtribuire
 {
 private:
@@ -21,8 +19,7 @@ public:
     void afiseaza() const;
 };
 
-// ---------- CORECT: lista de initializare ----------
-// Membrii sunt construiti DIRECT cu valoarea buna => 1 singur apel (copy constructor).
+// GOOD: member initializer list (single copy ctor call)
 class StudentLista
 {
 private:
@@ -35,9 +32,7 @@ public:
     void afiseaza() const;
 };
 
-// ---------- Ordinea de initializare ----------
-// Membrii se initializeaza in ordinea in care sunt DECLARATI in clasa,
-// NU in ordinea in care apar in lista de initializare.
+// Members are initialized in declaration order, not initializer list order
 class OrdineInit
 {
 private:

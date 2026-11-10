@@ -5,21 +5,18 @@
 
 namespace tema2 {
 
-// ---------- Varianta din carte (C++98): clasa de baza Uncopyable ----------
-// Copy constructor si operator= sunt PRIVATE si NEDEFINITE.
-// Orice clasa derivata din ea nu mai poate fi copiata.
+// C++98 approach: private, undefined copy operations in a base class
 class Uncopyable
 {
 protected:
-    Uncopyable() {}            // se pot crea / distruge obiecte derivate
+    Uncopyable() {}
     ~Uncopyable() {}
 
 private:
-    Uncopyable(const Uncopyable&);              // doar declarat, fara corp
-    Uncopyable& operator=(const Uncopyable&);   // doar declarat, fara corp
+    Uncopyable(const Uncopyable&);              // declared, never defined
+    Uncopyable& operator=(const Uncopyable&);   // declared, never defined
 };
 
-// O casa de vanzare e unica => nu are sens sa o copiem.
 class Apartament : private Uncopyable
 {
 private:
@@ -30,7 +27,7 @@ public:
     void afiseaza() const;
 };
 
-// ---------- Varianta moderna (C++11): = delete ----------
+// C++11 approach: = delete
 class ContBancar
 {
 private:
@@ -40,8 +37,8 @@ private:
 public:
     ContBancar(const std::string& iban, double sold);
 
-    ContBancar(const ContBancar&)            = delete;   // interzis
-    ContBancar& operator=(const ContBancar&) = delete;   // interzis
+    ContBancar(const ContBancar&)            = delete;
+    ContBancar& operator=(const ContBancar&) = delete;
 
     void afiseaza() const;
 };

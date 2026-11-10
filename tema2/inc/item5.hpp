@@ -6,25 +6,16 @@
 
 namespace tema2 {
 
-// ---------- Clasa in care NU scriem nicio functie ----------
-// Compilatorul genereaza singur (doar daca sunt folosite):
-//   - constructor implicit      Carte()
-//   - copy constructor          Carte(const Carte&)
-//   - copy assignment           Carte& operator=(const Carte&)
-//   - destructor                ~Carte()
-// (+ in C++11: move constructor si move assignment)
-// Acestea apeleaza la randul lor functiile corespunzatoare ale membrilor.
+// No user-declared functions: compiler generates default ctor, copy ctor,
+// copy assignment and destructor (plus move operations in C++11)
 class Carte
 {
 private:
     std::string titlu_;
-    Martor      martor_{"Carte"};   // il folosim ca sa vedem ce se apeleaza
+    Martor      martor_{"Carte"};
 };
 
-// ---------- Cand compilatorul NU genereaza ce credem ----------
-// 1) Am scris un constructor cu parametru => nu mai exista constructor implicit.
-// 2) Membru const (sau referinta) => operator= NU poate fi generat,
-//    pentru ca un const nu poate fi modificat dupa initializare.
+// User-declared ctor => no default ctor; const member => operator= is deleted
 class Nota
 {
 private:

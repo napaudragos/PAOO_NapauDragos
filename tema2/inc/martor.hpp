@@ -5,19 +5,18 @@
 
 namespace tema2 {
 
-// "Martor" = o clasa care afiseaza pe ecran ORICE functie speciala i se apeleaza.
-// O punem ca membru in alte clase ca sa VEDEM ce functii scrie/apeleaza compilatorul.
+// Prints every special member function call, to make compiler-generated calls visible
 class Martor
 {
 private:
     std::string nume_;
 
 public:
-    Martor();                                // constructor implicit
+    Martor();
     explicit Martor(const std::string& nume);
-    Martor(const Martor& other);             // copy constructor
-    Martor& operator=(const Martor& other);  // copy assignment
-    ~Martor();                               // destructor
+    Martor(const Martor& other);
+    Martor& operator=(const Martor& other);
+    ~Martor();
 };
 
 }

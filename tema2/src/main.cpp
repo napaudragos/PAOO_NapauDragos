@@ -7,7 +7,7 @@
 
 using namespace tema2;
 
-// Obiectele necopiabile se transmit prin REFERINTA (nu se face nicio copie).
+// Non-copyable objects are passed by reference
 void afiseazaCont(const ContBancar& cont)
 {
     cont.afiseaza();
@@ -17,11 +17,10 @@ int main()
 {
     std::cout << std::unitbuf;
 
-    // ================================================================
     std::cout << "=== ITEM 4: Initializeaza obiectele inainte sa le folosesti ===\n";
 
     std::cout << "\n--- 4.1 Tipurile de baza NU se initializeaza singure ---\n";
-    int x = 0;   // fara "= 0", x ar avea o valoare aleatoare
+    int x = 0;   // built-in types are not initialized automatically
     std::cout << "  x = " << x << " (initializat explicit)\n";
 
     std::cout << "\n--- 4.2 Atribuire in constructor (GRESIT) ---\n";
@@ -48,13 +47,10 @@ int main()
     }
 
     std::cout << "\n--- 4.5 Obiect static local in loc de global ---\n";
-    // Config a fost creat la 4.3, la primul apel config() (din item4.cpp).
-    // Aici il refolosim din main.cpp: NU se mai creeaza inca o data.
     std::cout << "  config() a fost creat la 4.3, la prima folosire.\n";
     std::cout << "  apel din main.cpp: nota maxima = " << config().notaMaxima() << '\n';
     std::cout << "  inca un apel:      nota maxima = " << config().notaMaxima() << '\n';
 
-    // ================================================================
     std::cout << "\n=== ITEM 5: Ce functii scrie si apeleaza C++ pe ascuns ===\n";
     {
         std::cout << "  >> Carte a;        (constructor implicit generat)\n";
@@ -71,24 +67,23 @@ int main()
     Nota n2(n1);
     std::cout << "  n2 = " << n2.valoare() << '\n';
 #ifdef DEMO_ERORI
-    Nota n3;     // EROARE: nu exista constructor implicit (am scris altul)
-    n1 = n2;     // EROARE: operator= e sters din cauza membrului const
+    Nota n3;     // error: no default constructor
+    n1 = n2;     // error: operator= deleted (const member)
 #endif
 
-    // ================================================================
     std::cout << "\n=== ITEM 6: Interzice functiile generate pe care nu le vrei ===\n";
 
     Apartament ap("Str. Lunga nr. 5");
     ap.afiseaza();
 
     ContBancar cont("RO49AAAA1B31007593840000", 1500);
-    afiseazaCont(cont);   // prin referinta => OK
+    afiseazaCont(cont);
 
 #ifdef DEMO_ERORI
-    Apartament ap2(ap);          // EROARE: copy constructor privat in Uncopyable
-    ContBancar cont2(cont);      // EROARE: copy constructor = delete
+    Apartament ap2(ap);          // error: private copy ctor in Uncopyable
+    ContBancar cont2(cont);      // error: deleted copy ctor
     ContBancar cont3("RO00", 0);
-    cont3 = cont;                // EROARE: operator= = delete
+    cont3 = cont;                // error: deleted operator=
 #endif
     std::cout << "  Copierea lor nu compileaza (vezi build cu -DDEMO_ERORI=ON).\n";
     return 0;

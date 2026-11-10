@@ -3,7 +3,7 @@
 
 namespace tema2 {
 
-// Item 4: obiect "global" folosit din mai multe fisiere .cpp.
+// Item 4: shared object used from several translation units
 class Config
 {
 private:
@@ -14,9 +14,8 @@ public:
     int notaMaxima() const;
 };
 
-// In loc de o variabila globala (Config config;), folosim o FUNCTIE
-// care intoarce un obiect static local. Astfel obiectul e creat garantat
-// la primul apel, deci nu poate fi folosit inainte sa fie initializat.
+// Function-local static instead of a global: created on first use,
+// avoids the static initialization order fiasco
 Config& config();
 
 }
